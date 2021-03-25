@@ -35,7 +35,7 @@ function serve() {
 }
 
 export default {
-  input: "src/main.js",
+  input: "src/main.ts",
   output: {
     sourcemap: true,
     format: "iife",
@@ -50,7 +50,7 @@ export default {
       },
       preprocess: autoPreprocess(),
     }),
-    typescript({ sourcemap: !production }),
+    typescript({ sourceMap: !production }),
     // we'll extract any component CSS out into
     // a separate file - better for performance
     css({ output: "bundle.css" }),

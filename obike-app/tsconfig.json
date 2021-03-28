@@ -3,6 +3,9 @@
     "strict": true
   },
   "extends": "@tsconfig/svelte/tsconfig.json",
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "node_modules/@types/youtube/index.d.ts"
+  ],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }

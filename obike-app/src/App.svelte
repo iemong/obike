@@ -1,11 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  let player = null;
+  let player: YT.Player | null = null;
 
   onMount(() => {
     window.onYouTubeIframeAPIReady = () => {
-      console.log("hoge");
       player = new YT.Player("player", {
         videoId: "ih19o9c-xDo",
         playerVars: {
@@ -26,10 +25,20 @@
       });
     };
   });
+
+  const handleClickButton = (e:Event) => {
+    const speed = Number((e.currentTarget as HTMLButtonElement).getAttribute('data-speed'))
+    player?.setPlaybackRate(speed)
+  }
 </script>
 
 <main>
   <div id="player"></div>
+  <button data-speed="0.5" on:click={handleClickButton}>0.5倍</button>
+  <button data-speed="0.75" on:click={handleClickButton}>0.75倍</button>
+  <button data-speed="1" on:click={handleClickButton}>1倍</button>
+  <button data-speed="1.5" on:click={handleClickButton}>1.5倍</button>
+  <button data-speed="2" on:click={handleClickButton}>2倍</button>
 </main>
 
 <style>

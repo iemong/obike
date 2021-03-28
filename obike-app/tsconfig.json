@@ -5,6 +5,7 @@
   "extends": "@tsconfig/svelte/tsconfig.json",
   "include": [
     "src/**/*",
+    "index.d.ts",
     "node_modules/@types/youtube/index.d.ts"
   ],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"]

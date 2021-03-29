@@ -14,6 +14,7 @@
     "@rollup/plugin-typescript": "^8.2.0",
     "@tsconfig/svelte": "^1.0.10",
     "@types/youtube": "^0.0.42",
+    "obniz": "^3.13.0",
     "prettier": "^2.2.1",
     "prettier-plugin-svelte": "^2.2.0",
     "rollup": "^2.3.4",

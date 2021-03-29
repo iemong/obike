@@ -1,5 +1,10 @@
-export {}
+import * as Obniz from "obniz";
+
+export {};
 
 declare global {
-    interface Window { onYouTubeIframeAPIReady: () => void; }
+  interface Window {
+    Obniz: (id:string) => Obniz;
+    onYouTubeIframeAPIReady: () => void;
+  }
 }

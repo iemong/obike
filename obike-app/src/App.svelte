@@ -3,6 +3,30 @@
 
   let player: YT.Player | null = null;
 
+  const obniz_id = ''
+  const obniz = new window.Obniz(obniz_id);
+  let speed = 0;
+  let cadence = 0;
+
+  //during obniz connection
+  obniz.onconnect = async () => {
+    obniz.io4?.drive('5v')
+    obniz.io4?.output(true)
+    obniz.io2?.output(false)
+    obniz.io1?.output(false)
+    obniz.ad0?.start(num => {
+      if(num < 2) {
+        cadence += 1
+      }
+    })
+  };
+
+  setInterval(() => {
+    speed = cadence / 3
+    console.log(speed)
+    cadence = 0
+  }, 3000)
+
   onMount(() => {
     window.onYouTubeIframeAPIReady = () => {
       player = new YT.Player("player", {

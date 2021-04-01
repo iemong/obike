@@ -10,7 +10,7 @@
 
   // youtube
   let player: YT.Player | null = null;
-  let youtubeUrl = "";
+  let youtubeId = "";
   let playbackRate = 0;
 
   //during obniz connection
@@ -90,7 +90,7 @@
   };
 
   const loadVideo = () => {
-    player?.cueVideoByUrl(youtubeUrl)
+    (player as YT.Player)?.cueVideoById(youtubeId);
   };
 
   /*const handleClickButton = (e: Event) => {
@@ -114,9 +114,9 @@
   <p>再生スピード: {playbackRate}</p>
   <label>
     <span>YouTubeのURLを入れてね</span>
-    <input type="url" bind:value="{youtubeUrl}" />
+    <input type="url" bind:value="{youtubeId}" />
   </label>
-  {#if youtubeUrl}
+  {#if youtubeId}
     <button on:click="{loadVideo}">動画を読み込む</button>
   {/if}
 </main>

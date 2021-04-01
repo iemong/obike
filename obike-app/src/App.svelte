@@ -1,12 +1,16 @@
 <script lang="ts">
-  let player: YT.Player | null = null;
-
+  // obniz
   const obniz_id = "";
   const obniz = new window.Obniz(obniz_id);
   let speed = 0;
   let cadence = 0;
+  let base = 0;
   let flag = false;
   let timerId: number | null = null;
+
+  // youtube
+  let player: YT.Player | null = null;
+  let youtubeUrl = "";
   let playbackRate = 0;
 
   //during obniz connection
@@ -34,12 +38,12 @@
     });
   };
 
-  let base = 0;
-
   setInterval(() => {
     speed = cadence / 5;
     const diff = speed - base;
+
     console.log(speed, cadence, diff);
+
     if (diff > 2) {
       playbackRate = 2;
     } else if (diff > 1.5) {
@@ -66,17 +70,16 @@
 
   window.onYouTubeIframeAPIReady = () => {
     player = new YT.Player("player", {
-      videoId: "ih19o9c-xDo",
       playerVars: {
         loop: 1,
-        controls: 0,
+        controls: 1,
         autoplay: 0,
         showinfo: 0,
         rel: 0,
       },
       events: {
         onReady: (event) => {
-          console.log('ready…');
+          console.log("ready…");
           console.log(event);
         },
         onStateChange: (event) => {
@@ -86,24 +89,36 @@
     });
   };
 
-  const handleClickButton = (e: Event) => {
+  const loadVideo = () => {
+    player?.cueVideoByUrl(youtubeUrl)
+  };
+
+  /*const handleClickButton = (e: Event) => {
     const speed = Number(
       (e.currentTarget as HTMLButtonElement).getAttribute("data-speed")
     );
     player?.setPlaybackRate(speed);
   };
+ */
 </script>
 
 <main>
   <div id="player"></div>
-  <button data-speed="0.0" on:click="{handleClickButton}">0倍</button>
-  <button data-speed="0.5" on:click="{handleClickButton}">0.5倍</button>
-  <button data-speed="0.75" on:click="{handleClickButton}">0.75倍</button>
-  <button data-speed="1" on:click="{handleClickButton}">1倍</button>
-  <button data-speed="1.5" on:click="{handleClickButton}">1.5倍</button>
-  <button data-speed="2" on:click="{handleClickButton}">2倍</button>
+  <!--  <button data-speed="0.0" on:click="{handleClickButton}">0倍</button>-->
+  <!--  <button data-speed="0.5" on:click="{handleClickButton}">0.5倍</button>-->
+  <!--  <button data-speed="0.75" on:click="{handleClickButton}">0.75倍</button>-->
+  <!--  <button data-speed="1" on:click="{handleClickButton}">1倍</button>-->
+  <!--  <button data-speed="1.5" on:click="{handleClickButton}">1.5倍</button>-->
+  <!--  <button data-speed="2" on:click="{handleClickButton}">2倍</button>-->
   <p>base: {base}</p>
   <p>再生スピード: {playbackRate}</p>
+  <label>
+    <span>YouTubeのURLを入れてね</span>
+    <input type="url" bind:value="{youtubeUrl}" />
+  </label>
+  {#if youtubeUrl}
+    <button on:click="{loadVideo}">動画を読み込む</button>
+  {/if}
 </main>
 
 <style>

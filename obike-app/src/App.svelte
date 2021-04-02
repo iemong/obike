@@ -92,40 +92,68 @@
   const loadVideo = () => {
     (player as YT.Player)?.cueVideoById(youtubeId);
   };
-
-  /*const handleClickButton = (e: Event) => {
-    const speed = Number(
-      (e.currentTarget as HTMLButtonElement).getAttribute("data-speed")
-    );
-    player?.setPlaybackRate(speed);
-  };
- */
 </script>
 
-<main>
-  <div id="player"></div>
-  <!--  <button data-speed="0.0" on:click="{handleClickButton}">0倍</button>-->
-  <!--  <button data-speed="0.5" on:click="{handleClickButton}">0.5倍</button>-->
-  <!--  <button data-speed="0.75" on:click="{handleClickButton}">0.75倍</button>-->
-  <!--  <button data-speed="1" on:click="{handleClickButton}">1倍</button>-->
-  <!--  <button data-speed="1.5" on:click="{handleClickButton}">1.5倍</button>-->
-  <!--  <button data-speed="2" on:click="{handleClickButton}">2倍</button>-->
-  <p>base: {base}</p>
-  <p>再生スピード: {playbackRate}</p>
-  <label>
-    <span>YouTubeのURLを入れてね</span>
-    <input type="url" bind:value="{youtubeId}" />
-  </label>
+<main class="main">
+  <div class="youtube-wrapper">
+    <div id="player" class="youtube-player"></div>
+  </div>
+  <div class="speed">
+    <p>Speed</p>
+    <p>{playbackRate}</p>
+  </div>
+  <div class="text-box">
+    <label class="input-label">
+      <span>Enter YouTube URL: </span>
+      <input type="url" bind:value="{youtubeId}" />
+    </label>
+  </div>
   {#if youtubeId}
     <button on:click="{loadVideo}">動画を読み込む</button>
   {/if}
 </main>
 
-<style>
-  main {
+<style lang="scss">
+  .main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .youtube-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 980px;
+    aspect-ratio: 16 / 9;
     text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .youtube-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .text-box {
+    margin: 16px auto 0;
+    text-align: center;
+  }
+
+  .input-label {
+    display: inline-block;
+  }
+
+  .speed {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    text-align: center;
   }
 </style>

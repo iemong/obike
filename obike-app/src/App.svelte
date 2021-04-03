@@ -99,13 +99,13 @@
     <div id="player" class="youtube-player"></div>
   </div>
   <div class="speed">
-    <p>Speed</p>
+    <p class="speed-title">PLAYBACK RATE</p>
     <p>{playbackRate}</p>
   </div>
   <div class="text-box">
     <label class="input-label">
-      <span>Enter YouTube URL: </span>
-      <input type="url" bind:value="{youtubeId}" />
+      <span>Enter YouTube ID : </span>
+      <input class="input" type="url" bind:value="{youtubeId}" />
     </label>
   </div>
   {#if youtubeId}
@@ -115,6 +115,10 @@
 
 <style lang="scss">
   .main {
+    --bg-color: #181818;
+    --text-color: #aaa;
+    --bd-color: #303030;
+
     position: relative;
     display: flex;
     flex-direction: column;
@@ -122,38 +126,62 @@
     align-items: center;
     height: 100vh;
     overflow: hidden;
+    background-color: var(--bg-color);
+
+    .youtube-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 980px;
+      aspect-ratio: 16 / 9;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .youtube-player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .text-box {
+      margin: 16px auto 0;
+      text-align: center;
+    }
+
+    .input-label {
+      display: inline-block;
+      color: var(--text-color);
+    }
+
+    .input {
+      color: var(--text-color);
+      border: 1px solid var(--bd-color);
+      background-color: #121212;
+    }
+
+    .speed {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 200px;
+      height: 100px;
+      text-align: center;
+      color: var(--text-color);
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .speed-title {
+      margin-bottom: 0.5em;
+      font-size: 24px;
+      font-weight: bold;
+    }
   }
 
-  .youtube-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 980px;
-    aspect-ratio: 16 / 9;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .youtube-player {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .text-box {
-    margin: 16px auto 0;
-    text-align: center;
-  }
-
-  .input-label {
-    display: inline-block;
-  }
-
-  .speed {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    text-align: center;
-  }
 </style>

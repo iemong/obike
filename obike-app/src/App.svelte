@@ -2,11 +2,11 @@
   // obniz
   const obniz_id = "";
   const obniz = new window.Obniz(obniz_id);
-  let speed = 0;
   let revolutionNum = 0;
-  let base = 0;
   let isHit = false;
   let timerId: number | null = null;
+  let prevDiff = 0;
+  const intervalSecond = 3;
 
   // youtube
   let player: YT.Player | null = null;
@@ -37,20 +37,21 @@
       }
     });
   };
+  let diff = 0;
 
   setInterval(() => {
-    speed = revolutionNum / 3;
-    const diff = speed - base;
+    const currentDiff = revolutionNum / intervalSecond;
+    diff = (currentDiff + prevDiff) / 2;
 
-    console.log(speed, revolutionNum, diff);
+    console.log(revolutionNum, diff);
 
-    if (diff > 2) {
+    if (diff > 1.2) {
       playbackRate = 2;
-    } else if (diff > 1.5) {
+    } else if (diff > 0.9) {
       playbackRate = 1.5;
-    } else if (diff > 1.0) {
+    } else if (diff > 0.6) {
       playbackRate = 1.0;
-    } else if (diff > 0.5) {
+    } else if (diff > 0.3) {
       playbackRate = 0.5;
     } else {
       playbackRate = 0;
@@ -68,8 +69,9 @@
       player?.pauseVideo();
     }
 
+    prevDiff = diff;
     revolutionNum = 0;
-  }, 3000);
+  }, intervalSecond * 1000);
 
   // YouTubeのセットアップ
   window.onYouTubeIframeAPIReady = () => {
@@ -103,8 +105,10 @@
     <div id="player" class="youtube-player"></div>
   </div>
   <div class="speed">
-    <p class="speed-title">PLAYBACK RATE</p>
+    <p class="playback-title">再生速度</p>
     <p>{playbackRate}</p>
+    <p class="speed-title">SPEED</p>
+    <p>{diff}</p>
   </div>
   <div class="text-box">
     <label class="input-label">
@@ -168,21 +172,26 @@
     .speed {
       position: absolute;
       right: 20px;
-      bottom: 20px;
+      top: 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       width: 200px;
-      height: 100px;
       text-align: center;
       color: var(--text-color);
       font-size: 24px;
       font-weight: bold;
     }
 
-    .speed-title {
+    .playback-title {
       margin-bottom: 0.5em;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .speed-title {
+      margin: 0.5em 0;
       font-size: 24px;
       font-weight: bold;
     }

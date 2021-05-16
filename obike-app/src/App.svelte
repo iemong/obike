@@ -3,9 +3,9 @@
   const obniz_id = "";
   const obniz = new window.Obniz(obniz_id);
   let speed = 0;
-  let cadence = 0;
+  let revolutionNum = 0;
   let base = 0;
-  let flag = false;
+  let isHit = false;
   let timerId: number | null = null;
 
   // youtube
@@ -21,28 +21,28 @@
     obniz.io1?.output(false);
     obniz.ad0?.start((num) => {
       if (num > 4) {
-        if (flag) return;
-        flag = true;
-        cadence += 1;
+        if (isHit) return;
+        isHit = true;
+        revolutionNum += 1;
       } else {
-        if (!flag) return;
+        if (!isHit) return;
         if (timerId) {
           console.log("cancel");
           clearTimeout(timerId);
           timerId = null;
         }
         timerId = window.setTimeout(() => {
-          flag = false;
+          isHit = false;
         });
       }
     });
   };
 
   setInterval(() => {
-    speed = cadence / 5;
+    speed = revolutionNum / 3;
     const diff = speed - base;
 
-    console.log(speed, cadence, diff);
+    console.log(speed, revolutionNum, diff);
 
     if (diff > 2) {
       playbackRate = 2;
@@ -57,17 +57,21 @@
     }
 
     if (playbackRate) {
+      // 再生スピードを設定する
       player?.setPlaybackRate(playbackRate);
+      // 再生中じゃなかったら、再生する
       if (player?.getPlayerState() !== 1) {
         player?.playVideo();
       }
     } else {
+      // 再生スピードが0なので、一時停止
       player?.pauseVideo();
     }
 
-    cadence = 0;
-  }, 5000);
+    revolutionNum = 0;
+  }, 3000);
 
+  // YouTubeのセットアップ
   window.onYouTubeIframeAPIReady = () => {
     player = new YT.Player("player", {
       playerVars: {
@@ -183,5 +187,4 @@
       font-weight: bold;
     }
   }
-
 </style>

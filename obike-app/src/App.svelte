@@ -5,7 +5,8 @@
   let revolutionNum = 0;
   let isHit = false;
   let timerId: number | null = null;
-  let prevDiff = 0;
+  let diff = 0;
+  let prevSpeed = 0;
   const intervalSecond = 3;
 
   // youtube
@@ -37,21 +38,20 @@
       }
     });
   };
-  let diff = 0;
 
   setInterval(() => {
     const currentDiff = revolutionNum / intervalSecond;
-    diff = (currentDiff + prevDiff) / 2;
+    speed = (currentDiff + prevSpeed) / 2;
 
-    console.log(revolutionNum, diff);
+    console.log(revolutionNum, speed);
 
-    if (diff > 1.2) {
+    if (speed > 1.2) {
       playbackRate = 2;
-    } else if (diff > 0.9) {
+    } else if (speed > 0.9) {
       playbackRate = 1.5;
-    } else if (diff > 0.6) {
+    } else if (speed > 0.6) {
       playbackRate = 1.0;
-    } else if (diff > 0.3) {
+    } else if (speed > 0.3) {
       playbackRate = 0.5;
     } else {
       playbackRate = 0;
@@ -69,7 +69,7 @@
       player?.pauseVideo();
     }
 
-    prevDiff = diff;
+    prevSpeed = speed;
     revolutionNum = 0;
   }, intervalSecond * 1000);
 
@@ -108,7 +108,7 @@
     <p class="playback-title">再生速度</p>
     <p>{playbackRate}</p>
     <p class="speed-title">SPEED</p>
-    <p>{diff}</p>
+    <p>{speed}</p>
   </div>
   <div class="text-box">
     <label class="input-label">

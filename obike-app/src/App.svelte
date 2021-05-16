@@ -5,7 +5,7 @@
   let revolutionNum = 0;
   let isHit = false;
   let timerId: number | null = null;
-  let diff = 0;
+  let speed = 0;
   let prevSpeed = 0;
   const intervalSecond = 3;
 
